@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+       {
+          "label": "cmake",
+          "type": "shell",
+          "command": "cmake",
+          "args": [
+ 
+             "-G",
+             "\"Unix Makefiles\"",
+             "-DCMAKE_BUILD_TYPE=Debug",
+             ".."
+          ],
+          "options": {
+             "cwd": "${workspaceRoot}/build"
+          },
+          "problemMatcher": []
+       },
+       {
+          "label": "make",
+          "command": "make",
+          "type": "shell",
+          "args": [
+             "-j8"
+          ],
+          "options": {
+             "cwd": "${workspaceRoot}/build"
+          },
+ 
+          "group": {
+             "kind": "build",
+             "isDefault": true
+          },
+          "problemMatcher": []
+       }
+    ]
+ }
