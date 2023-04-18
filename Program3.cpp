@@ -21,6 +21,31 @@ using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;
 
+const int SCALE = 8;
+
+struct MatchData {
+    Mat img1, img2, output;
+    vector<KeyPoint> keypoints1, keypoints2;
+    vector<DMatch> matches;
+    int numMatches;
+};
+
+void on_trackbar(int, void* userdata) {
+    MatchData* data = static_cast<MatchData*>(userdata);
+
+    // Sort the matches based on the distance
+    sort(data->matches.begin(), data->matches.end());
+
+    // Draw only the top 'numMatches' matches
+    vector<DMatch> topMatches(data->matches.begin(), data->matches.begin() + min(data->numMatches, static_cast<int>(data->matches.size())));
+
+    // Draw the top matches
+    drawMatches(data->img1, data->keypoints1, data->img2, data->keypoints2, topMatches, data->output, Scalar::all(-1), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
+
+    // Display the output image
+    imshow("output", data->output);
+}
+
 int main() {
     // Read the images
     Mat img1 = imread("kittens1.jpg", IMREAD_GRAYSCALE);
@@ -47,20 +72,33 @@ int main() {
     vector<DMatch> matches;
     matcher->match(descriptors1, descriptors2, matches);
 
-    // Draw the matches
+    // Create an empty output image
     Mat output;
-    drawMatches(img1, keypoints1, img2, keypoints2, matches, output);
 
-    // Output the drawn matches to a file
-    imwrite("output.jpg", output);
-
-    // Display the matches
-    int SCALE = 8;
+    // Initialize match data
+    MatchData data;
+    data.numMatches = 50;
+    data.matches = matches;
+    data.output = output;
+    data.img1 = img1;
+    data.keypoints1 = keypoints1;
+    data.img2 = img2;
+    data.keypoints2 = keypoints2;
+    
+    // Create a window to display the output
     namedWindow("output", WINDOW_NORMAL);
-    resizeWindow("output", output.cols / SCALE, output.rows / SCALE);
-    imshow("output", output);
 
+    // Trackbar to control the number of matches displayed
+    createTrackbar("Number of matches", "output", &data.numMatches, matches.size(), on_trackbar, &data);
+
+    // Call the trackbar callback once to display the initial state
+    on_trackbar(0, &data);
+
+    // Resize the window
+    resizeWindow("output", data.output.cols / SCALE, data.output.rows / SCALE);
+
+    // Wait for the user to press a key
     waitKey(0);
-
+    
     return 0;
 }

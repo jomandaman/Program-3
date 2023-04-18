@@ -355,8 +355,12 @@ CMakeFiles/program3.dir/Program3.cpp.o: /Users/josiahzacharias/Documents/School/
   /usr/local/include/opencv4/opencv2/stitching/detail/blenders.hpp \
   /usr/local/include/opencv4/opencv2/video.hpp \
   /usr/local/include/opencv4/opencv2/video/tracking.hpp \
-  /usr/local/include/opencv4/opencv2/video/background_segm.hpp
+  /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
+  /usr/local/include/opencv4/opencv2/xfeatures2d.hpp \
+  /usr/local/include/opencv4/opencv2/xfeatures2d/nonfree.hpp
 
+
+/usr/local/include/opencv4/opencv2/xfeatures2d.hpp:
 
 /usr/local/include/opencv4/opencv2/stitching/detail/blenders.hpp:
 
@@ -449,6 +453,8 @@ CMakeFiles/program3.dir/Program3.cpp.o: /Users/josiahzacharias/Documents/School/
 /usr/local/include/opencv4/opencv2/features2d.hpp:
 
 /usr/local/include/opencv4/opencv2/calib3d.hpp:
+
+/usr/local/include/opencv4/opencv2/xfeatures2d/nonfree.hpp:
 
 /usr/local/include/opencv4/opencv2/core/ovx.hpp:
 
